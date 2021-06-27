@@ -4,6 +4,11 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 export default new Router({
   routes: [
     {
@@ -13,20 +18,24 @@ export default new Router({
       children:[
         {
           path: '/found',
-          component: ()=>import('@/views/content/found.vue')
+          component: ()=>import('@/views/components/content/found.vue')
         },
         {
           path: '/new',
-          component: ()=>import('@/views/content/new.vue')
+          component: ()=>import('@/views/components/content/new.vue')
         },
         {
           path: '/new-mv',
-          component: ()=>import('@/views/content/new-mv.vue')
+          component: ()=>import('@/views/components/content/new-mv.vue')
         },
         {
           path: '/recommended',
-          component: ()=>import('@/views/content/recommended.vue')
-        }
+          component: ()=>import('@/views/components/content/recommended.vue')
+        },
+        {
+          path: '/search-res',
+          component: ()=>import('@/views/components/search-res.vue')
+        },
       ]
     }
 
